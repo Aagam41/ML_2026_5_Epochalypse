@@ -1,0 +1,79 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Week 4 Report}
+\lhead{MOT using Classical ML}
+\rfoot{Page \thepage}
+
+\title{\textbf{Weekly Progress Report - Week 4} \\
+	\large Improve existing online trackers by measuring feature evolution of objects using
+	Classical Machine Learning models [UAV Videos]}
+
+\author{Group: Epochalypse\\\{Aagam Sheth, Mahima Parekh, Aakanksha Jadhav, Vansh Lilani\}}
+
+\date{Reporting Period: March 9 - March 14, 2026 \\
+	Submission Date: March 14, 2026}
+
+\begin{document}
+	
+	\maketitle
+	
+	\section*{Outline of Performed Tasks:}
+	\begin{itemize}[leftmargin=*]
+		\item Began implementing classical feature extraction techniques for object representation in the ReID pipeline
+		\item Explored feature extraction methods including SIFT and Hough Transform for capturing structural and keypoint-based object characteristics
+		\item Designed a feature processing pipeline to extract descriptors from detected object bounding boxes
+		\item Started implementing a Random Forest classifier to perform object re-identification based on handcrafted features
+	\end{itemize}
+	
+	\section*{Classical Feature Extraction Experiments}
+	
+	This week focused on evaluating classical computer vision features that can capture discriminative properties of objects in UAV imagery.
+	
+	\textbf{SIFT (Scale-Invariant Feature Transform)} was explored to detect keypoints and compute local descriptors that remain stable under changes in scale, orientation, and illumination. These descriptors can help represent distinctive patterns of objects across frames.
+	
+	\textbf{Hough Transform} was studied to detect geometric structures such as lines and edges within objects. This helps capture structural characteristics that may remain consistent as objects move across frames.
+	
+	These features are extracted from each detected object bounding box and aggregated to form a feature representation that can be used for identity matching.
+	
+	\section*{Random Forest for Re-Identification}
+	
+	A Random Forest classifier is being implemented as a lightweight alternative to deep ReID embedding networks. Instead of learning high-dimensional embeddings using deep neural networks, the model will learn to classify object identities based on classical feature vectors derived from SIFT descriptors, edge structures, and other handcrafted features. Random Forest was chosen because:
+	\begin{itemize}
+		\item It can handle high-dimensional feature spaces
+		\item It is robust to noisy features
+		\item It provides fast inference compared to deep neural networks
+	\end{itemize}
+	
+	The classifier will eventually be integrated into the tracking pipeline to predict whether two detections across frames correspond to the same object.
+	
+	\section*{Integration Plan with MOT Pipeline}
+	
+	The extracted classical features will replace the deep ReID embeddings used in trackers such as DeepSORT or BoT-SORT. The pipeline being developed consists of:
+	\begin{enumerate}
+		\item Extract bounding box crops from detections
+		\item Compute classical descriptors (SIFT, structural features)
+		\item Construct a feature vector representation
+		\item Use the Random Forest classifier to predict identity similarity between objects across frames
+	\end{enumerate}
+	
+	This modular design allows experimentation with different feature combinations while keeping the tracking framework unchanged.
+	
+	\section*{Tentative Tasks for Next Week}
+	
+	\begin{enumerate}
+		\item Complete the Random Forest training pipeline for ReID classification
+		\item Integrate the classical feature module into one tracker (DeepSORT or ByteTrack)
+		\item Perform preliminary experiments on VisDrone sequences
+		\item Evaluate identity consistency and tracking performance
+	\end{enumerate}
+	
+\end{document}
